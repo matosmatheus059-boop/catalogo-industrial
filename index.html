@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head><script src="https://myhub.ia.br/canvas-vendor/tailwind.js"></script>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#183047">
   <title>Catálogo Industrial</title>
   <style>
@@ -32,7 +32,7 @@
     button { cursor: pointer; }
 
     .topbar {
-      min-height: 72px;
+      min-height: 68px;
       padding: 14px clamp(16px, 4vw, 42px);
       display: flex;
       align-items: center;
@@ -46,7 +46,6 @@
       margin: 0;
       font-size: clamp(19px, 4vw, 26px);
       font-weight: 800;
-      letter-spacing: -.5px;
     }
 
     .top-actions {
@@ -57,14 +56,24 @@
       font-size: 13px;
     }
 
-    .top-actions button {
-      border: 1px solid #587087;
-      border-radius: 8px;
-      padding: 8px 11px;
-      background: transparent;
-      color: white;
+    .top-actions button,
+    .secondary-button,
+    .back-button {
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      padding: 9px 12px;
+      background: var(--white);
+      color: var(--ink);
       font-weight: 700;
     }
+
+    .top-actions button {
+      border-color: #587087;
+      background: transparent;
+      color: var(--white);
+    }
+
+    [hidden] { display: none !important; }
 
     .page {
       width: min(1100px, 100%);
@@ -73,13 +82,15 @@
     }
 
     .login-wrap {
-      min-height: calc(100vh - 72px);
+      min-height: calc(100vh - 68px);
       display: grid;
       place-items: center;
-      padding: 24px 12px;
+      padding: 22px 12px;
     }
 
-    .login-card, .form-panel, .catalog-panel, .sector-panel {
+    .login-card,
+    .catalog-panel,
+    .form-panel {
       border: 1px solid var(--line);
       border-radius: 17px;
       background: var(--white);
@@ -92,11 +103,12 @@
     }
 
     .login-card h2 { margin: 0 0 7px; }
-    .login-card p { margin: 0 0 20px; color: var(--muted); line-height: 1.5; }
+    .login-card > p { margin: 0 0 20px; color: var(--muted); line-height: 1.5; }
 
     .login-form { display: grid; gap: 12px; }
 
-    .login-form label, .form-group label {
+    .login-form label,
+    .form-group label {
       display: grid;
       gap: 6px;
       color: #40566a;
@@ -104,7 +116,10 @@
       font-weight: 700;
     }
 
-    .login-form input, .form-group input, .form-group select, .form-group textarea,
+    .login-form input,
+    .form-group input,
+    .form-group select,
+    .form-group textarea,
     .search {
       width: 100%;
       min-height: 43px;
@@ -116,8 +131,11 @@
       outline: none;
     }
 
-    .login-form input:focus, .form-group input:focus, .form-group select:focus,
-    .form-group textarea:focus, .search:focus {
+    .login-form input:focus,
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus,
+    .search:focus {
       border-color: #55a997;
       box-shadow: 0 0 0 3px rgba(22, 131, 111, .12);
     }
@@ -143,6 +161,7 @@
       color: #922f2a;
       font-size: 13px;
       line-height: 1.45;
+      overflow-wrap: anywhere;
     }
 
     .message.show { display: block; }
@@ -154,9 +173,10 @@
 
     .sector-panel {
       padding: 21px;
-      border: 0;
+      border-radius: 17px;
       background: var(--navy);
       color: var(--white);
+      box-shadow: var(--shadow);
     }
 
     .sector-panel h2 { margin: 0 0 15px; font-size: 19px; }
@@ -197,15 +217,6 @@
       border-bottom: 1px solid var(--line);
     }
 
-    .back-button, .secondary-button {
-      border: 1px solid var(--line);
-      border-radius: 9px;
-      padding: 9px 12px;
-      background: var(--white);
-      color: var(--ink);
-      font-weight: 700;
-    }
-
     .back-button { margin-bottom: 14px; }
     .catalog-title { margin: 0 0 13px; font-size: 22px; }
 
@@ -223,7 +234,7 @@
 
     .item-card {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-columns: 68px minmax(0, 1fr) auto;
       align-items: center;
       gap: 12px;
       padding: 13px;
@@ -232,8 +243,33 @@
       background: var(--white);
     }
 
+    .item-thumbnail {
+      width: 68px;
+      height: 68px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 0;
+      background: #f2f5f8;
+      color: #8a9bab;
+      font-size: 24px;
+    }
+
+    .item-thumbnail:not(:disabled) { cursor: zoom-in; }
+    .item-thumbnail:disabled { cursor: default; opacity: .72; }
+    .item-thumbnail img { width: 100%; height: 100%; object-fit: cover; }
+
+    .item-info { min-width: 0; }
     .item-name { margin: 0 0 5px; font-size: 15px; line-height: 1.35; }
-    .item-detail { margin: 3px 0 0; color: var(--muted); font-size: 12px; line-height: 1.4; overflow-wrap: anywhere; }
+    .item-detail {
+      margin: 3px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+      overflow-wrap: anywhere;
+    }
 
     .item-code {
       display: inline-block;
@@ -259,7 +295,7 @@
     }
 
     .item-buttons .delete { color: var(--red); }
-    .empty { padding: 34px 16px; color: var(--muted); text-align: center; line-height: 1.5; }
+    .empty, .loading { padding: 34px 16px; color: var(--muted); text-align: center; line-height: 1.5; }
 
     .form-panel {
       display: none;
@@ -280,6 +316,8 @@
     .form-group.full { grid-column: 1 / -1; }
     .form-group textarea { min-height: 75px; resize: vertical; }
 
+    .form-hint { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.4; }
+
     .form-footer {
       display: flex;
       justify-content: flex-end;
@@ -294,15 +332,68 @@
       line-height: 1.5;
     }
 
-    .loading { padding: 35px 18px; color: var(--muted); text-align: center; }
+    .photo-modal[hidden] { display: none; }
 
-    @media (max-width: 560px) {
+    .photo-modal {
+      position: fixed;
+      z-index: 1000;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      background: rgba(12, 25, 38, .75);
+    }
+
+    .photo-modal-card {
+      position: relative;
+      width: min(650px, 100%);
+      max-height: 90vh;
+      overflow: auto;
+      border-radius: 15px;
+      padding: 14px;
+      background: #fff;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, .3);
+    }
+
+    .photo-modal-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 38px;
+      height: 38px;
+      border: 0;
+      border-radius: 50%;
+      background: rgba(24, 48, 71, .88);
+      color: #fff;
+      font-size: 25px;
+      line-height: 1;
+    }
+
+    .photo-modal-image {
+      display: block;
+      width: 100%;
+      max-height: 75vh;
+      border-radius: 9px;
+      object-fit: contain;
+      background: #f2f5f8;
+    }
+
+    .photo-modal-caption {
+      margin: 10px 42px 0 2px;
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 700;
+      overflow-wrap: anywhere;
+    }
+
+    @media (max-width: 600px) {
       .topbar { align-items: flex-start; flex-direction: column; }
       .top-actions { width: 100%; justify-content: space-between; }
       .page { padding-top: 21px; }
       .sector-panel { padding: 17px; }
-      .item-card { grid-template-columns: 1fr; }
-      .item-buttons { flex-direction: row; }
+      .item-card { grid-template-columns: 58px minmax(0, 1fr); }
+      .item-thumbnail { width: 58px; height: 58px; }
+      .item-buttons { grid-column: 2; flex-direction: row; }
       .catalog-actions { align-items: flex-start; flex-direction: column; }
       .form-grid { grid-template-columns: 1fr; }
       .form-group.full { grid-column: auto; }
@@ -318,92 +409,101 @@
     </div>
   </header>
 
-  <main>
-    <section class="login-wrap" id="loginPage">
-      <div class="login-card">
-        <h2>Entrar no catálogo</h2>
-        <p>Acesse com o e-mail e a senha da sua conta do Supabase.</p>
-        <form class="login-form" id="loginForm">
-          <label for="emailInput">E-mail
-            <input id="emailInput" type="email" autocomplete="username" value="matosmatheus059@gmail.com" required>
-          </label>
-          <label for="passwordInput">Senha
-            <input id="passwordInput" type="password" autocomplete="current-password" required>
-          </label>
-          <button class="primary-button" id="loginButton" type="submit">Entrar</button>
-        </form>
-        <p class="message" id="loginMessage" role="status"></p>
+  <section class="login-wrap" id="loginPage">
+    <div class="login-card">
+      <h2>Entrar no catálogo</h2>
+      <p>Acesse com o e-mail e a senha da sua conta do Supabase.</p>
+      <form class="login-form" id="loginForm">
+        <label for="emailInput">E-mail
+          <input id="emailInput" type="email" autocomplete="username" required>
+        </label>
+        <label for="passwordInput">Senha
+          <input id="passwordInput" type="password" autocomplete="current-password" required>
+        </label>
+        <button class="primary-button" id="loginButton" type="submit">Entrar</button>
+      </form>
+      <p class="message" id="loginMessage" role="status"></p>
+    </div>
+  </section>
+
+  <main class="page" id="appPage" hidden>
+    <section id="sectorsPage">
+      <div class="intro">
+        <h2>Setores</h2>
+        <p>Escolha um setor para consultar e administrar as peças.</p>
+      </div>
+      <div class="sector-panel">
+        <h2>Seus setores</h2>
+        <div class="sector-grid" id="sectorGrid"></div>
       </div>
     </section>
 
-    <main class="page" id="appPage" hidden>
-      <section id="sectorsPage">
-        <div class="intro">
-          <h2>Setores</h2>
-          <p>Escolha um setor para consultar e administrar as peças.</p>
-        </div>
-        <div class="sector-panel">
-          <h2>Seus setores</h2>
-          <div class="sector-grid" id="sectorGrid"></div>
-        </div>
-      </section>
+    <section class="catalog-panel" id="catalogPage">
+      <div class="catalog-head">
+        <button class="back-button" id="backButton" type="button">← Voltar aos setores</button>
+        <h2 class="catalog-title" id="catalogTitle"></h2>
+        <input class="search" id="searchInput" type="search"
+          placeholder="Pesquisar por nome, código ou equipamento..."
+          aria-label="Pesquisar peças">
+      </div>
+      <div class="catalog-actions">
+        <span id="resultCount"></span>
+        <button class="primary-button" id="addMaterialButton" type="button">＋ Adicionar peça</button>
+      </div>
+      <div class="item-list" id="itemList"></div>
+    </section>
 
-      <section class="catalog-panel" id="catalogPage">
-        <div class="catalog-head">
-          <button class="back-button" id="backButton" type="button">← Voltar aos setores</button>
-          <h2 class="catalog-title" id="catalogTitle"></h2>
-          <input class="search" id="searchInput" type="search" placeholder="Pesquisar por nome, código ou equipamento..." aria-label="Pesquisar peças">
-        </div>
-        <div class="catalog-actions">
-          <span id="resultCount"></span>
-          <button class="primary-button" id="addMaterialButton" type="button">＋ Adicionar peça</button>
-        </div>
-        <div class="item-list" id="itemList"></div>
-      </section>
-
-      <section class="form-panel" id="materialFormPanel">
-        <h2 class="form-title" id="formTitle">Adicionar peça</h2>
-        <form id="materialForm">
-          <div class="form-grid">
-            <div class="form-group">
-              <label for="materialName">Nome da peça *</label>
-              <input id="materialName" maxlength="90" required placeholder="Ex.: Rolamento do volante">
-            </div>
-            <div class="form-group">
-              <label for="materialCode">Código</label>
-              <input id="materialCode" maxlength="40" placeholder="Ex.: 40491149">
-            </div>
-            <div class="form-group">
-              <label for="materialSector">Setor *</label>
-              <input id="materialSector" maxlength="40" required placeholder="Ex.: Farpado">
-            </div>
-            <div class="form-group">
-              <label for="materialEquipment">Equipamento ou máquina</label>
-              <input id="materialEquipment" maxlength="80" placeholder="Ex.: Farpado">
-            </div>
-            <div class="form-group">
-              <label for="materialManufacturer">Fabricante ou modelo</label>
-              <input id="materialManufacturer" maxlength="80" placeholder="Ex.: NPM">
-            </div>
-            <div class="form-group">
-              <label for="materialPhotoUrl">Link da foto (opcional)</label>
-              <input id="materialPhotoUrl" type="url" placeholder="https://...">
-            </div>
-            <div class="form-group full">
-              <label for="materialNote">Observações</label>
-              <textarea id="materialNote" maxlength="240" placeholder="Medida, aplicação ou outra informação útil"></textarea>
-            </div>
+    <section class="form-panel" id="materialFormPanel">
+      <h2 class="form-title" id="formTitle">Adicionar peça</h2>
+      <form id="materialForm">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="materialName">Nome da peça *</label>
+            <input id="materialName" maxlength="90" required placeholder="Ex.: Rolamento do volante">
           </div>
-          <div class="form-footer">
-            <button class="secondary-button" id="cancelMaterial" type="button">Cancelar</button>
-            <button class="primary-button" id="saveMaterialButton" type="submit">Salvar peça</button>
+          <div class="form-group">
+            <label for="materialCode">Código</label>
+            <input id="materialCode" maxlength="40" placeholder="Ex.: 40491149">
           </div>
-        </form>
-        <p class="message" id="formMessage" role="status"></p>
-      </section>
+          <div class="form-group">
+            <label for="materialSector">Setor *</label>
+            <input id="materialSector" maxlength="40" required placeholder="Ex.: Farpado">
+          </div>
+          <div class="form-group">
+            <label for="materialEquipment">Equipamento ou máquina</label>
+            <input id="materialEquipment" maxlength="80" placeholder="Ex.: Farpado">
+          </div>
+          <div class="form-group">
+            <label for="materialManufacturer">Fabricante ou modelo</label>
+            <input id="materialManufacturer" maxlength="80" placeholder="Ex.: NPM">
+          </div>
+          <div class="form-group">
+            <label for="materialPhoto">Foto da peça (opcional)</label>
+            <input id="materialPhoto" type="file" accept="image/jpeg,image/png,image/webp,image/gif">
+            <p class="form-hint">JPG, PNG, WebP ou GIF, até 5 MB. Ao editar, deixe em branco para manter a foto atual.</p>
+          </div>
+          <div class="form-group full">
+            <label for="materialNote">Observações</label>
+            <textarea id="materialNote" maxlength="240" placeholder="Medida, aplicação ou outra informação útil"></textarea>
+          </div>
+        </div>
+        <div class="form-footer">
+          <button class="secondary-button" id="cancelMaterial" type="button">Cancelar</button>
+          <button class="primary-button" id="saveMaterialButton" type="submit">Salvar peça</button>
+        </div>
+      </form>
+      <p class="message" id="formMessage" role="status"></p>
+    </section>
 
-      <p class="notice">Os dados são guardados no Supabase. O acesso ao catálogo exige login.</p>
-    </main>
+    <div class="photo-modal" id="photoModal" hidden role="dialog" aria-modal="true" aria-label="Prévia da foto">
+      <div class="photo-modal-card">
+        <button class="photo-modal-close" id="closePhotoModal" type="button" aria-label="Fechar prévia">×</button>
+        <img class="photo-modal-image" id="photoModalImage" alt="">
+        <p class="photo-modal-caption" id="photoModalCaption"></p>
+      </div>
+    </div>
+
+    <p class="notice">Os dados e as fotos são guardados no Supabase. O acesso ao catálogo exige login.</p>
   </main>
 
   <script>
@@ -411,7 +511,7 @@
     const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_fJ36i6hMxg_NthkNFf3Tvw_6RZ_k9eF";
     const OWNER_UID = "1e719569-14a3-43d5-8c4c-97d690946050";
     const TABLE = "Materiais";
-
+    const STORAGE_BUCKET = "materiais-fotos";
     const DEFAULT_SECTORS = ["Farpado", "Trefila", "Galva", "Mecânica", "Elétrica", "Outros"];
 
     let accessToken = "";
@@ -420,14 +520,14 @@
     let selectedSector = "";
     let editingId = null;
 
-    const loginPage = document.getElementById("loginPage");
-    const appPage = document.getElementById("appPage");
-    const sectorsPage = document.getElementById("sectorsPage");
-    const catalogPage = document.getElementById("catalogPage");
-    const materialFormPanel = document.getElementById("materialFormPanel");
-    const sectorGrid = document.getElementById("sectorGrid");
-    const itemList = document.getElementById("itemList");
-    const searchInput = document.getElementById("searchInput");
+    const byId = id => document.getElementById(id);
+    const loginPage = byId("loginPage");
+    const appPage = byId("appPage");
+    const sectorsPage = byId("sectorsPage");
+    const catalogPage = byId("catalogPage");
+    const materialFormPanel = byId("materialFormPanel");
+    const itemList = byId("itemList");
+    const searchInput = byId("searchInput");
 
     function escapeHtml(value) {
       return String(value ?? "").replace(/[&<>"']/g, character => ({
@@ -446,10 +546,28 @@
       element.classList.remove("show", "success");
     }
 
+    async function readResponse(response) {
+      const text = await response.text();
+      if (!text.trim()) return null;
+
+      try {
+        return JSON.parse(text);
+      } catch {
+        return text;
+      }
+    }
+
+    function errorFromBody(body, fallback) {
+      if (body && typeof body === "object") {
+        return body.message || body.msg || body.error_description || body.error || fallback;
+      }
+      return typeof body === "string" && body.trim() ? body : fallback;
+    }
+
     function authHeaders() {
       return {
-        "apikey": SUPABASE_PUBLISHABLE_KEY,
-        "Authorization": `Bearer ${accessToken}`,
+        apikey: SUPABASE_PUBLISHABLE_KEY,
+        Authorization: `Bearer ${accessToken}`,
         "Content-Type": "application/json"
       };
     }
@@ -460,61 +578,68 @@
         headers: { ...authHeaders(), ...(options.headers || {}) }
       });
 
+      const body = await readResponse(response);
+
       if (!response.ok) {
-        let details = "";
-        try {
-          const body = await response.json();
-          details = body.message || body.error_description || body.error || "";
-        } catch {}
-        throw new Error(details || `Falha na solicitação (${response.status}).`);
+        throw new Error(errorFromBody(body, `Falha na solicitação (${response.status}).`));
       }
 
-      if (response.status === 204) return null;
-      return response.json();
+      // Respostas vazias, como HTTP 204, são válidas no Supabase.
+      return body;
     }
 
     async function signIn(email, password) {
       const response = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
         method: "POST",
         headers: {
-          "apikey": SUPABASE_PUBLISHABLE_KEY,
+          apikey: SUPABASE_PUBLISHABLE_KEY,
           "Content-Type": "application/json"
         },
         body: JSON.stringify({ email, password })
       });
 
-      const body = await response.json().catch(() => ({}));
+      const body = await readResponse(response);
       if (!response.ok) {
-        throw new Error(body.msg || body.message || body.error_description || "E-mail ou senha inválidos.");
+        throw new Error(errorFromBody(body, "E-mail ou senha inválidos."));
+      }
+      if (!body || typeof body !== "object" || !body.access_token || !body.user) {
+        throw new Error("O Supabase não retornou os dados esperados do login.");
       }
       return body;
     }
 
     async function signOut() {
-      try {
-        await fetch(`${SUPABASE_URL}/auth/v1/logout`, {
-          method: "POST",
-          headers: {
-            "apikey": SUPABASE_PUBLISHABLE_KEY,
-            "Authorization": `Bearer ${accessToken}`
-          }
-        });
-      } catch {}
+      if (accessToken) {
+        try {
+          await fetch(`${SUPABASE_URL}/auth/v1/logout`, {
+            method: "POST",
+            headers: {
+              apikey: SUPABASE_PUBLISHABLE_KEY,
+              Authorization: `Bearer ${accessToken}`
+            }
+          });
+        } catch {}
+      }
+
       accessToken = "";
       currentUser = null;
       materials = [];
+      selectedSector = "";
       appPage.hidden = true;
-      document.getElementById("topActions").hidden = true;
+      byId("topActions").hidden = true;
       loginPage.hidden = false;
-      document.getElementById("passwordInput").value = "";
-      clearMessage(document.getElementById("loginMessage"));
+      byId("passwordInput").value = "";
+      clearMessage(byId("loginMessage"));
+      materialFormPanel.classList.remove("open");
+      catalogPage.classList.remove("open");
+      sectorsPage.hidden = false;
     }
 
     function showApp() {
       loginPage.hidden = true;
       appPage.hidden = false;
-      document.getElementById("topActions").hidden = false;
-      document.getElementById("signedInAs").textContent = currentUser?.email || "Conectado";
+      byId("topActions").hidden = false;
+      byId("signedInAs").textContent = currentUser?.email || "Conectado";
     }
 
     async function loadMaterials() {
@@ -524,19 +649,25 @@
         owner_id: `eq.${OWNER_UID}`,
         order: "name.asc"
       });
-      materials = await supabaseRequest(`/rest/v1/${encodeURIComponent(TABLE)}?${query.toString()}`);
+
+      const result = await supabaseRequest(
+        `/rest/v1/${encodeURIComponent(TABLE)}?${query.toString()}`
+      );
+
+      materials = Array.isArray(result) ? result : [];
       renderSectors();
       if (selectedSector) renderMaterials();
     }
 
     function getSectors() {
       const fromMaterials = materials.map(item => item.sector).filter(Boolean);
-      return [...new Set([...DEFAULT_SECTORS, ...fromMaterials])].sort((a, b) => a.localeCompare(b, "pt-BR"));
+      return [...new Set([...DEFAULT_SECTORS, ...fromMaterials])]
+        .sort((a, b) => a.localeCompare(b, "pt-BR"));
     }
 
     function renderSectors() {
       const sectors = getSectors();
-      sectorGrid.innerHTML = sectors.map(sector => {
+      byId("sectorGrid").innerHTML = sectors.map(sector => {
         const count = materials.filter(item => item.sector === sector).length;
         return `
           <button class="sector-card" type="button" data-sector="${escapeHtml(sector)}">
@@ -545,7 +676,7 @@
           </button>`;
       }).join("");
 
-      sectorGrid.querySelectorAll("[data-sector]").forEach(button => {
+      byId("sectorGrid").querySelectorAll("[data-sector]").forEach(button => {
         button.addEventListener("click", () => openSector(button.dataset.sector));
       });
     }
@@ -554,7 +685,7 @@
       selectedSector = sector;
       sectorsPage.hidden = true;
       catalogPage.classList.add("open");
-      document.getElementById("catalogTitle").textContent = sector;
+      byId("catalogTitle").textContent = sector;
       searchInput.value = "";
       materialFormPanel.classList.remove("open");
       renderMaterials();
@@ -575,11 +706,13 @@
       const query = searchInput.value.trim().toLocaleLowerCase("pt-BR");
       const filtered = materials
         .filter(item => item.sector === selectedSector)
-        .filter(item => `${item.name} ${item.code} ${item.equipment || ""} ${item.manufacturer || ""} ${item.note || ""}`
-          .toLocaleLowerCase("pt-BR").includes(query))
-        .sort((a, b) => a.name.localeCompare(b.name, "pt-BR"));
+        .filter(item =>
+          `${item.name} ${item.code || ""} ${item.equipment || ""} ${item.manufacturer || ""} ${item.note || ""}`
+            .toLocaleLowerCase("pt-BR").includes(query)
+        )
+        .sort((a, b) => (a.name || "").localeCompare(b.name || "", "pt-BR"));
 
-      document.getElementById("resultCount").textContent =
+      byId("resultCount").textContent =
         `${filtered.length} ${filtered.length === 1 ? "peça encontrada" : "peças encontradas"}`;
 
       if (!filtered.length) {
@@ -589,12 +722,19 @@
 
       itemList.innerHTML = filtered.map(item => `
         <article class="item-card">
-          <div>
+          <button class="item-thumbnail" type="button"
+            data-photo-preview="${escapeHtml(item.photo_url || "")}"
+            data-photo-name="${escapeHtml(item.name)}"
+            ${item.photo_url ? `aria-label="Ampliar foto de ${escapeHtml(item.name)}"` : "disabled aria-label='Sem foto cadastrada'"}>
+            ${item.photo_url
+              ? `<img src="${escapeHtml(item.photo_url)}" alt="Miniatura de ${escapeHtml(item.name)}">`
+              : "▧"}
+          </button>
+          <div class="item-info">
             <h3 class="item-name">${escapeHtml(item.name)}</h3>
-            <p class="item-detail">${escapeHtml(item.sector)}${item.equipment ? ` · ${escapeHtml(item.equipment)}` : ""}</p>
+            <p class="item-detail">${escapeHtml(item.sector || "")}${item.equipment ? ` · ${escapeHtml(item.equipment)}` : ""}</p>
             ${item.manufacturer ? `<p class="item-detail">Fabricante/modelo: ${escapeHtml(item.manufacturer)}</p>` : ""}
             ${item.note ? `<p class="item-detail">${escapeHtml(item.note)}</p>` : ""}
-            ${item.photo_url ? `<p class="item-detail"><a href="${escapeHtml(item.photo_url)}" target="_blank" rel="noopener noreferrer">Abrir foto</a></p>` : ""}
             <span class="item-code">${item.code ? `Código: ${escapeHtml(item.code)}` : "Código não informado"}</span>
           </div>
           <div class="item-buttons">
@@ -603,47 +743,85 @@
           </div>
         </article>`).join("");
 
+      itemList.querySelectorAll("[data-photo-preview]").forEach(button => {
+        if (!button.disabled) {
+          button.addEventListener("click", () =>
+            openPhotoPreview(button.dataset.photoPreview, button.dataset.photoName)
+          );
+        }
+      });
+
       itemList.querySelectorAll("[data-edit]").forEach(button => {
         button.addEventListener("click", () => editMaterial(button.dataset.edit));
       });
+
       itemList.querySelectorAll("[data-delete]").forEach(button => {
         button.addEventListener("click", () => deleteMaterial(button.dataset.delete));
       });
     }
 
     function resetMaterialForm() {
-      document.getElementById("materialForm").reset();
+      byId("materialForm").reset();
       editingId = null;
-      document.getElementById("formTitle").textContent = "Adicionar peça";
-      document.getElementById("saveMaterialButton").textContent = "Salvar peça";
-      clearMessage(document.getElementById("formMessage"));
+      byId("formTitle").textContent = "Adicionar peça";
+      byId("saveMaterialButton").textContent = "Salvar peça";
+      clearMessage(byId("formMessage"));
     }
 
     function openMaterialForm(item = null) {
       resetMaterialForm();
+
       if (item) {
         editingId = item.id;
-        document.getElementById("formTitle").textContent = "Editar peça";
-        document.getElementById("saveMaterialButton").textContent = "Salvar alterações";
-        document.getElementById("materialName").value = item.name || "";
-        document.getElementById("materialCode").value = item.code || "";
-        document.getElementById("materialSector").value = item.sector || selectedSector;
-        document.getElementById("materialEquipment").value = item.equipment || "";
-        document.getElementById("materialManufacturer").value = item.manufacturer || "";
-        document.getElementById("materialPhotoUrl").value = item.photo_url || "";
-        document.getElementById("materialNote").value = item.note || "";
+        byId("formTitle").textContent = "Editar peça";
+        byId("saveMaterialButton").textContent = "Salvar alterações";
+        byId("materialName").value = item.name || "";
+        byId("materialCode").value = item.code || "";
+        byId("materialSector").value = item.sector || selectedSector;
+        byId("materialEquipment").value = item.equipment || "";
+        byId("materialManufacturer").value = item.manufacturer || "";
+        byId("materialNote").value = item.note || "";
       } else {
-        document.getElementById("materialSector").value = selectedSector;
+        byId("materialSector").value = selectedSector;
       }
 
       materialFormPanel.classList.add("open");
-      document.getElementById("materialName").focus();
+      byId("materialName").focus();
       materialFormPanel.scrollIntoView({ behavior: "smooth", block: "nearest" });
     }
 
     function editMaterial(id) {
       const item = materials.find(material => String(material.id) === String(id));
       if (item) openMaterialForm(item);
+    }
+
+    async function uploadMaterialPhoto(file) {
+      const safeName = file.name.normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^a-zA-Z0-9._-]/g, "-");
+
+      const path = `${OWNER_UID}/${crypto.randomUUID()}-${safeName || "foto"}`;
+      const encodedPath = path.split("/").map(encodeURIComponent).join("/");
+      const response = await fetch(
+        `${SUPABASE_URL}/storage/v1/object/${STORAGE_BUCKET}/${encodedPath}`,
+        {
+          method: "POST",
+          headers: {
+            apikey: SUPABASE_PUBLISHABLE_KEY,
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": file.type,
+            "x-upsert": "true"
+          },
+          body: file
+        }
+      );
+
+      const body = await readResponse(response);
+      if (!response.ok) {
+        throw new Error(errorFromBody(body, `Falha ao enviar a foto (${response.status}).`));
+      }
+
+      return `${SUPABASE_URL}/storage/v1/object/public/${STORAGE_BUCKET}/${encodedPath}`;
     }
 
     async function deleteMaterial(id) {
@@ -655,34 +833,52 @@
           id: `eq.${id}`,
           owner_id: `eq.${OWNER_UID}`
         });
-        await supabaseRequest(`/rest/v1/${encodeURIComponent(TABLE)}?${query.toString()}`, {
-          method: "DELETE"
-        });
+
+        await supabaseRequest(
+          `/rest/v1/${encodeURIComponent(TABLE)}?${query.toString()}`,
+          { method: "DELETE" }
+        );
+
         await loadMaterials();
       } catch (error) {
         alert(`Não foi possível excluir a peça: ${error.message}`);
       }
     }
 
-    document.getElementById("loginForm").addEventListener("submit", async event => {
+    function openPhotoPreview(url, name) {
+      if (!url) return;
+      byId("photoModalImage").src = url;
+      byId("photoModalImage").alt = `Foto de ${name}`;
+      byId("photoModalCaption").textContent = name;
+      byId("photoModal").hidden = false;
+      byId("closePhotoModal").focus();
+    }
+
+    function closePhotoPreview() {
+      byId("photoModal").hidden = true;
+      byId("photoModalImage").removeAttribute("src");
+    }
+
+    byId("loginForm").addEventListener("submit", async event => {
       event.preventDefault();
-      const button = document.getElementById("loginButton");
-      const message = document.getElementById("loginMessage");
+      const button = byId("loginButton");
+      const message = byId("loginMessage");
       clearMessage(message);
       button.disabled = true;
       button.textContent = "Entrando…";
 
       try {
         const result = await signIn(
-          document.getElementById("emailInput").value.trim(),
-          document.getElementById("passwordInput").value
+          byId("emailInput").value.trim(),
+          byId("passwordInput").value
         );
+
         accessToken = result.access_token;
         currentUser = result.user;
 
-        if (currentUser?.id !== OWNER_UID) {
+        if (currentUser.id !== OWNER_UID) {
           await signOut();
-          throw new Error("Esta conta não é a autorizada para acessar este catálogo.");
+          throw new Error("Esta conta não está autorizada para acessar este catálogo.");
         }
 
         showApp();
@@ -695,34 +891,44 @@
       }
     });
 
-    document.getElementById("logoutButton").addEventListener("click", signOut);
+    byId("logoutButton").addEventListener("click", signOut);
+    byId("backButton").addEventListener("click", showSectors);
+    byId("addMaterialButton").addEventListener("click", () => openMaterialForm());
 
-    document.getElementById("backButton").addEventListener("click", showSectors);
-
-    document.getElementById("addMaterialButton").addEventListener("click", () => openMaterialForm());
-
-    document.getElementById("cancelMaterial").addEventListener("click", () => {
+    byId("cancelMaterial").addEventListener("click", () => {
       materialFormPanel.classList.remove("open");
       resetMaterialForm();
     });
 
+    byId("closePhotoModal").addEventListener("click", closePhotoPreview);
+
+    byId("photoModal").addEventListener("click", event => {
+      if (event.target.id === "photoModal") closePhotoPreview();
+    });
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape" && !byId("photoModal").hidden) {
+        closePhotoPreview();
+      }
+    });
+
     searchInput.addEventListener("input", renderMaterials);
 
-    document.getElementById("materialForm").addEventListener("submit", async event => {
+    byId("materialForm").addEventListener("submit", async event => {
       event.preventDefault();
-      const message = document.getElementById("formMessage");
-      const saveButton = document.getElementById("saveMaterialButton");
+
+      const message = byId("formMessage");
+      const saveButton = byId("saveMaterialButton");
       clearMessage(message);
       saveButton.disabled = true;
 
       const record = {
-        name: document.getElementById("materialName").value.trim(),
-        code: document.getElementById("materialCode").value.trim(),
-        sector: document.getElementById("materialSector").value.trim(),
-        equipment: document.getElementById("materialEquipment").value.trim() || null,
-        manufacturer: document.getElementById("materialManufacturer").value.trim() || null,
-        photo_url: document.getElementById("materialPhotoUrl").value.trim() || null,
-        note: document.getElementById("materialNote").value.trim() || null,
+        name: byId("materialName").value.trim(),
+        code: byId("materialCode").value.trim(),
+        sector: byId("materialSector").value.trim(),
+        equipment: byId("materialEquipment").value.trim() || null,
+        manufacturer: byId("materialManufacturer").value.trim() || null,
+        note: byId("materialNote").value.trim() || null,
         owner_id: OWNER_UID
       };
 
@@ -732,28 +938,54 @@
         return;
       }
 
+      const photoFile = byId("materialPhoto").files[0];
+      const allowedTypes = ["image/jpeg", "image/png", "image/webp", "image/gif"];
+
+      if (photoFile && (!allowedTypes.includes(photoFile.type) || photoFile.size > 5 * 1024 * 1024)) {
+        showMessage(message, "Escolha uma imagem JPG, PNG, WebP ou GIF de até 5 MB.");
+        saveButton.disabled = false;
+        return;
+      }
+
       try {
+        const existing = editingId
+          ? materials.find(material => String(material.id) === String(editingId))
+          : null;
+
+        const photoUrl = photoFile
+          ? await uploadMaterialPhoto(photoFile)
+          : existing?.photo_url || null;
+
+        record.photo_url = photoUrl;
+
         if (editingId) {
           const query = new URLSearchParams({
             id: `eq.${editingId}`,
             owner_id: `eq.${OWNER_UID}`
           });
-          await supabaseRequest(`/rest/v1/${encodeURIComponent(TABLE)}?${query.toString()}`, {
-            method: "PATCH",
-            headers: { "Prefer": "return=minimal" },
-            body: JSON.stringify(record)
-          });
+
+          await supabaseRequest(
+            `/rest/v1/${encodeURIComponent(TABLE)}?${query.toString()}`,
+            {
+              method: "PATCH",
+              headers: { Prefer: "return=minimal" },
+              body: JSON.stringify(record)
+            }
+          );
         } else {
-          await supabaseRequest(`/rest/v1/${encodeURIComponent(TABLE)}`, {
-            method: "POST",
-            headers: { "Prefer": "return=minimal" },
-            body: JSON.stringify(record)
-          });
+          await supabaseRequest(
+            `/rest/v1/${encodeURIComponent(TABLE)}`,
+            {
+              method: "POST",
+              headers: { Prefer: "return=minimal" },
+              body: JSON.stringify(record)
+            }
+          );
         }
 
         selectedSector = record.sector;
         await loadMaterials();
-        document.getElementById("catalogTitle").textContent = selectedSector;
+        byId("catalogTitle").textContent = selectedSector;
         catalogPage.classList.add("open");
         sectorsPage.hidden = true;
         materialFormPanel.classList.remove("open");
