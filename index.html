@@ -8,8 +8,7 @@
   <style>
     :root {
       --navy: #183047;
-      --navy-2: #294761;
-      --navy-3: #355873;
+      --navy-soft: #294761;
       --ink: #183047;
       --muted: #657b8f;
       --line: #dfe6ed;
@@ -34,261 +33,93 @@
 
     .topbar {
       min-height: 72px;
-      padding: 18px clamp(18px, 4vw, 42px);
+      padding: 14px clamp(16px, 4vw, 42px);
       display: flex;
       align-items: center;
+      justify-content: space-between;
+      gap: 14px;
       background: var(--navy);
       color: var(--white);
     }
 
     .brand {
       margin: 0;
-      font-size: clamp(20px, 4vw, 27px);
+      font-size: clamp(19px, 4vw, 26px);
       font-weight: 800;
       letter-spacing: -.5px;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #d5e1eb;
+      font-size: 13px;
+    }
+
+    .top-actions button {
+      border: 1px solid #587087;
+      border-radius: 8px;
+      padding: 8px 11px;
+      background: transparent;
+      color: white;
+      font-weight: 700;
     }
 
     .page {
       width: min(1100px, 100%);
       margin: 0 auto;
-      padding: 30px clamp(12px, 3vw, 28px) 48px;
+      padding: 28px clamp(12px, 3vw, 28px) 48px;
     }
 
-    .intro {
-      margin-bottom: 24px;
-    }
-
-    .intro h2 {
-      margin: 0 0 8px;
-      font-size: 23px;
-      font-weight: 650;
-    }
-
-    .intro p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 16px;
-      line-height: 1.5;
-    }
-
-    .sector-panel {
-      padding: 24px;
-      border-radius: 23px;
-      background: var(--navy);
-      color: var(--white);
-      box-shadow: var(--shadow);
-    }
-
-    .sector-panel-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 22px;
-    }
-
-    .sector-panel-title {
-      margin: 0 0 9px;
-      font-size: 21px;
-      font-weight: 650;
-    }
-
-    .sector-panel-copy {
-      margin: 0;
-      color: #d2dfeb;
-      font-size: 15px;
-      line-height: 1.5;
-    }
-
-    .plus-button {
-      flex: 0 0 54px;
-      width: 54px;
-      height: 54px;
-      border: 1px solid rgba(255,255,255,.55);
-      border-radius: 15px;
+    .login-wrap {
+      min-height: calc(100vh - 72px);
       display: grid;
       place-items: center;
-      background: var(--white);
-      color: var(--navy);
-      font-size: 35px;
-      font-weight: 400;
-      line-height: 1;
-      box-shadow: 0 4px 12px rgba(0,0,0,.12);
+      padding: 24px 12px;
     }
 
-    .plus-button:hover { background: #eaf0f5; }
-    .plus-button:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
-      outline: 3px solid #72c9bd;
-      outline-offset: 2px;
-    }
-
-    .sector-manager {
-      display: none;
-      margin: 0 0 20px;
-      padding: 16px;
-      border: 1px solid #49647d;
-      border-radius: 14px;
-      background: #203a54;
-    }
-
-    .sector-manager.open { display: block; }
-
-    .manager-heading {
-      margin: 0 0 12px;
-      font-size: 16px;
-    }
-
-    .manager-form {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 14px;
-    }
-
-    .manager-form input {
-      min-width: 0;
-      flex: 1;
-      height: 42px;
-      border: 1px solid #cfd9e2;
-      border-radius: 9px;
-      padding: 0 12px;
-      color: var(--ink);
-      background: var(--white);
-    }
-
-    .manager-form button, .small-button {
-      border: 0;
-      border-radius: 9px;
-      padding: 9px 13px;
-      background: #23817a;
-      color: var(--white);
-      font-weight: 700;
-    }
-
-    .managed-list { display: grid; gap: 7px; }
-
-    .managed-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 9px 10px;
-      border-radius: 9px;
-      background: rgba(255,255,255,.07);
-    }
-
-    .managed-name {
-      min-width: 0;
-      overflow-wrap: anywhere;
-      font-weight: 650;
-    }
-
-    .managed-actions {
-      display: flex;
-      gap: 6px;
-      flex: 0 0 auto;
-    }
-
-    .managed-actions button {
-      border: 1px solid #668099;
-      border-radius: 7px;
-      padding: 6px 8px;
-      background: transparent;
-      color: var(--white);
-      font-size: 12px;
-    }
-
-    .managed-actions button:hover { background: var(--navy-3); }
-
-    .sector-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    .sector-card {
-      min-height: 136px;
-      border: 1px solid #3b5873;
-      border-radius: 17px;
-      padding: 18px;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: center;
-      background: var(--navy-2);
-      color: var(--white);
-      text-align: left;
-      transition: background .15s ease, transform .15s ease;
-    }
-
-    .sector-card:hover {
-      background: var(--navy-3);
-      transform: translateY(-1px);
-    }
-
-    .sector-card-name {
-      margin-bottom: 14px;
-      font-size: 21px;
-      font-weight: 800;
-      overflow-wrap: anywhere;
-    }
-
-    .sector-card-count {
-      color: #d3e1ec;
-      font-size: 15px;
-    }
-
-    .catalog-panel {
-      display: none;
-      overflow: hidden;
+    .login-card, .form-panel, .catalog-panel, .sector-panel {
       border: 1px solid var(--line);
-      border-radius: 18px;
+      border-radius: 17px;
       background: var(--white);
       box-shadow: var(--shadow);
     }
 
-    .catalog-panel.open { display: block; }
-
-    .catalog-head {
-      padding: 19px;
-      border-bottom: 1px solid var(--line);
+    .login-card {
+      width: min(420px, 100%);
+      padding: 25px;
     }
 
-    .back-button {
-      margin-bottom: 16px;
-      border: 1px solid var(--line);
-      border-radius: 9px;
-      padding: 9px 12px;
-      background: var(--white);
-      color: var(--ink);
+    .login-card h2 { margin: 0 0 7px; }
+    .login-card p { margin: 0 0 20px; color: var(--muted); line-height: 1.5; }
+
+    .login-form { display: grid; gap: 12px; }
+
+    .login-form label, .form-group label {
+      display: grid;
+      gap: 6px;
+      color: #40566a;
+      font-size: 13px;
       font-weight: 700;
     }
 
-    .back-button:hover { background: #f4f7f9; }
-
-    .catalog-title {
-      margin: 0 0 14px;
-      font-size: 22px;
-    }
-
+    .login-form input, .form-group input, .form-group select, .form-group textarea,
     .search {
       width: 100%;
-      height: 46px;
+      min-height: 43px;
       border: 1px solid #d5dfe7;
-      border-radius: 11px;
-      padding: 0 14px;
+      border-radius: 9px;
+      padding: 10px 11px;
       color: var(--ink);
-      background: #fbfcfd;
-      font-size: 15px;
+      background: var(--white);
+      outline: none;
     }
 
-    .catalog-actions {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 14px 19px 0;
-      color: var(--muted);
-      font-size: 13px;
+    .login-form input:focus, .form-group input:focus, .form-group select:focus,
+    .form-group textarea:focus, .search:focus {
+      border-color: #55a997;
+      box-shadow: 0 0 0 3px rgba(22, 131, 111, .12);
     }
 
     .primary-button {
@@ -301,59 +132,112 @@
     }
 
     .primary-button:hover { background: #126b5b; }
+    .primary-button:disabled { opacity: .65; cursor: wait; }
 
-    .item-list {
-      display: grid;
-      gap: 9px;
-      padding: 14px;
+    .message {
+      display: none;
+      margin: 14px 0 0;
+      border-radius: 9px;
+      padding: 10px 12px;
+      background: #fff0ef;
+      color: #922f2a;
+      font-size: 13px;
+      line-height: 1.45;
     }
+
+    .message.show { display: block; }
+    .message.success { background: #edf8f3; color: #17644e; }
+
+    .intro { margin-bottom: 22px; }
+    .intro h2 { margin: 0 0 7px; font-size: 23px; }
+    .intro p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.5; }
+
+    .sector-panel {
+      padding: 21px;
+      border: 0;
+      background: var(--navy);
+      color: var(--white);
+    }
+
+    .sector-panel h2 { margin: 0 0 15px; font-size: 19px; }
+
+    .sector-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 11px;
+    }
+
+    .sector-card {
+      min-height: 112px;
+      border: 1px solid #3b5873;
+      border-radius: 13px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      background: var(--navy-soft);
+      color: var(--white);
+      text-align: left;
+    }
+
+    .sector-card:hover { background: #355873; }
+    .sector-name { margin-bottom: 10px; font-size: 18px; font-weight: 800; }
+    .sector-count { color: #d3e1ec; font-size: 13px; }
+
+    .catalog-panel {
+      display: none;
+      overflow: hidden;
+    }
+
+    .catalog-panel.open { display: block; }
+
+    .catalog-head {
+      padding: 18px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .back-button, .secondary-button {
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      padding: 9px 12px;
+      background: var(--white);
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .back-button { margin-bottom: 14px; }
+    .catalog-title { margin: 0 0 13px; font-size: 22px; }
+
+    .catalog-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px 18px 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .item-list { display: grid; gap: 9px; padding: 14px; }
 
     .item-card {
       display: grid;
-      grid-template-columns: 62px minmax(0, 1fr) auto;
+      grid-template-columns: minmax(0, 1fr) auto;
       align-items: center;
-      gap: 13px;
-      padding: 12px;
+      gap: 12px;
+      padding: 13px;
       border: 1px solid #e6ebef;
       border-radius: 13px;
       background: var(--white);
     }
 
-    .item-photo {
-      width: 62px;
-      height: 62px;
-      border-radius: 10px;
-      display: grid;
-      place-items: center;
-      overflow: hidden;
-      background: #edf2f6;
-      color: #7890a3;
-      font-size: 25px;
-    }
-
-    .item-photo img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .item-name {
-      margin: 0 0 5px;
-      font-size: 15px;
-      line-height: 1.35;
-    }
-
-    .item-detail {
-      margin: 3px 0 0;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.4;
-      overflow-wrap: anywhere;
-    }
+    .item-name { margin: 0 0 5px; font-size: 15px; line-height: 1.35; }
+    .item-detail { margin: 3px 0 0; color: var(--muted); font-size: 12px; line-height: 1.4; overflow-wrap: anywhere; }
 
     .item-code {
       display: inline-block;
-      margin-top: 6px;
+      margin-top: 7px;
       border-radius: 7px;
       padding: 5px 8px;
       background: #edf5f2;
@@ -362,16 +246,12 @@
       font-weight: 800;
     }
 
-    .item-buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
+    .item-buttons { display: flex; flex-direction: column; gap: 6px; }
 
     .item-buttons button {
       border: 1px solid var(--line);
       border-radius: 7px;
-      padding: 6px 8px;
+      padding: 7px 9px;
       background: var(--white);
       color: var(--ink);
       font-size: 11px;
@@ -379,30 +259,16 @@
     }
 
     .item-buttons .delete { color: var(--red); }
-
-    .empty {
-      padding: 35px 18px;
-      color: var(--muted);
-      text-align: center;
-      line-height: 1.5;
-    }
+    .empty { padding: 34px 16px; color: var(--muted); text-align: center; line-height: 1.5; }
 
     .form-panel {
       display: none;
       margin-top: 18px;
       padding: 18px;
-      border: 1px solid var(--line);
-      border-radius: 15px;
-      background: var(--white);
-      box-shadow: var(--shadow);
     }
 
     .form-panel.open { display: block; }
-
-    .form-title {
-      margin: 0 0 15px;
-      font-size: 19px;
-    }
+    .form-title { margin: 0 0 15px; font-size: 19px; }
 
     .form-grid {
       display: grid;
@@ -410,47 +276,15 @@
       gap: 12px;
     }
 
-    .form-group {
-      display: grid;
-      gap: 6px;
-    }
-
+    .form-group { display: grid; gap: 6px; }
     .form-group.full { grid-column: 1 / -1; }
-
-    .form-group label {
-      color: #40566a;
-      font-size: 13px;
-      font-weight: 700;
-    }
-
-    .form-group input, .form-group select, .form-group textarea {
-      width: 100%;
-      border: 1px solid #d5dfe7;
-      border-radius: 9px;
-      padding: 10px;
-      color: var(--ink);
-      background: var(--white);
-    }
-
-    .form-group textarea {
-      min-height: 75px;
-      resize: vertical;
-    }
+    .form-group textarea { min-height: 75px; resize: vertical; }
 
     .form-footer {
       display: flex;
       justify-content: flex-end;
       gap: 8px;
       margin-top: 15px;
-    }
-
-    .cancel-button {
-      border: 1px solid var(--line);
-      border-radius: 9px;
-      padding: 10px 13px;
-      background: var(--white);
-      color: var(--ink);
-      font-weight: 700;
     }
 
     .notice {
@@ -460,157 +294,134 @@
       line-height: 1.5;
     }
 
+    .loading { padding: 35px 18px; color: var(--muted); text-align: center; }
+
     @media (max-width: 560px) {
-      .page { padding-top: 22px; }
-      .sector-panel { padding: 19px; border-radius: 20px; }
-      .sector-card { min-height: 124px; padding: 15px; }
-      .sector-card-name { font-size: 19px; }
-      .item-card { grid-template-columns: 52px minmax(0, 1fr); }
-      .item-photo { width: 52px; height: 52px; }
-      .item-buttons { grid-column: 2; flex-direction: row; }
+      .topbar { align-items: flex-start; flex-direction: column; }
+      .top-actions { width: 100%; justify-content: space-between; }
+      .page { padding-top: 21px; }
+      .sector-panel { padding: 17px; }
+      .item-card { grid-template-columns: 1fr; }
+      .item-buttons { flex-direction: row; }
       .catalog-actions { align-items: flex-start; flex-direction: column; }
       .form-grid { grid-template-columns: 1fr; }
       .form-group.full { grid-column: auto; }
-      .manager-form { flex-wrap: wrap; }
-      .manager-form button { min-height: 42px; }
-    }
-
-    @media (max-width: 350px) {
-      .sector-panel-head { align-items: flex-start; }
-      .plus-button { flex-basis: 48px; width: 48px; height: 48px; }
-      .sector-card { min-height: 112px; }
-      .sector-card-name { font-size: 17px; }
-      .sector-card-count { font-size: 13px; }
     }
   </style>
 </head>
 <body>
   <header class="topbar">
     <h1 class="brand">Catálogo Industrial</h1>
+    <div class="top-actions" id="topActions" hidden>
+      <span id="signedInAs"></span>
+      <button id="logoutButton" type="button">Sair</button>
+    </div>
   </header>
 
-  <main class="page">
-    <section id="sectorsPage">
-      <div class="intro">
-        <h2>Setores</h2>
-        <p>Escolha um setor para consultar as peças cadastradas.</p>
-      </div>
-
-      <div class="sector-panel">
-        <div class="sector-panel-head">
-          <div>
-            <h2 class="sector-panel-title">Setores</h2>
-            <p class="sector-panel-copy">Toque em um setor para abrir suas peças.</p>
-          </div>
-          <button class="plus-button" id="toggleSectorManager" type="button"
-            aria-label="Gerenciar setores" aria-expanded="false" title="Gerenciar setores">+</button>
-        </div>
-
-        <section class="sector-manager" id="sectorManager" aria-label="Gerenciar setores">
-          <h3 class="manager-heading">Adicionar setor</h3>
-          <form class="manager-form" id="sectorForm">
-            <input id="newSectorName" maxlength="40" placeholder="Nome do setor"
-              aria-label="Nome do novo setor" required>
-            <button type="submit">Adicionar</button>
-          </form>
-          <div class="managed-list" id="managedSectors"></div>
-        </section>
-
-        <div class="sector-grid" id="sectorGrid"></div>
+  <main>
+    <section class="login-wrap" id="loginPage">
+      <div class="login-card">
+        <h2>Entrar no catálogo</h2>
+        <p>Acesse com o e-mail e a senha da sua conta do Supabase.</p>
+        <form class="login-form" id="loginForm">
+          <label for="emailInput">E-mail
+            <input id="emailInput" type="email" autocomplete="username" value="matosmatheus059@gmail.com" required>
+          </label>
+          <label for="passwordInput">Senha
+            <input id="passwordInput" type="password" autocomplete="current-password" required>
+          </label>
+          <button class="primary-button" id="loginButton" type="submit">Entrar</button>
+        </form>
+        <p class="message" id="loginMessage" role="status"></p>
       </div>
     </section>
 
-    <section class="catalog-panel" id="catalogPage">
-      <div class="catalog-head">
-        <button class="back-button" id="backButton" type="button">← Voltar aos setores</button>
-        <h2 class="catalog-title" id="catalogTitle"></h2>
-        <input class="search" id="searchInput" type="search"
-          placeholder="Pesquisar por nome, código ou equipamento..." aria-label="Pesquisar peças">
-      </div>
-      <div class="catalog-actions">
-        <span id="resultCount"></span>
-        <button class="primary-button" id="addMaterialButton" type="button">＋ Adicionar peça</button>
-      </div>
-      <div class="item-list" id="itemList"></div>
-    </section>
-
-    <section class="form-panel" id="materialFormPanel">
-      <h2 class="form-title" id="formTitle">Adicionar peça</h2>
-      <form id="materialForm">
-        <div class="form-grid">
-          <div class="form-group">
-            <label for="materialName">Nome da peça *</label>
-            <input id="materialName" maxlength="90" required placeholder="Ex.: Rolamento do volante">
-          </div>
-          <div class="form-group">
-            <label for="materialCode">Código</label>
-            <input id="materialCode" maxlength="40" placeholder="Ex.: 40491149">
-          </div>
-          <div class="form-group">
-            <label for="materialSector">Setor *</label>
-            <select id="materialSector" required></select>
-          </div>
-          <div class="form-group">
-            <label for="materialEquipment">Equipamento ou máquina</label>
-            <input id="materialEquipment" maxlength="80" placeholder="Ex.: Farpado">
-          </div>
-          <div class="form-group">
-            <label for="materialMaker">Fabricante ou modelo</label>
-            <input id="materialMaker" maxlength="80" placeholder="Ex.: NPM">
-          </div>
-          <div class="form-group">
-            <label for="materialPhoto">Foto da peça</label>
-            <input id="materialPhoto" type="file" accept="image/*">
-          </div>
-          <div class="form-group full">
-            <label for="materialNote">Observações</label>
-            <textarea id="materialNote" maxlength="240"
-              placeholder="Medida, aplicação ou outra informação útil"></textarea>
-          </div>
+    <main class="page" id="appPage" hidden>
+      <section id="sectorsPage">
+        <div class="intro">
+          <h2>Setores</h2>
+          <p>Escolha um setor para consultar e administrar as peças.</p>
         </div>
-        <div class="form-footer">
-          <button class="cancel-button" id="cancelMaterial" type="button">Cancelar</button>
-          <button class="primary-button" type="submit">Salvar peça</button>
+        <div class="sector-panel">
+          <h2>Seus setores</h2>
+          <div class="sector-grid" id="sectorGrid"></div>
         </div>
-      </form>
-    </section>
+      </section>
 
-    <p class="notice">
-      Protótipo de demonstração: os dados e as fotos ficam apenas durante esta sessão do navegador.
-      Fechar ou atualizar a página pode apagar as alterações.
-    </p>
+      <section class="catalog-panel" id="catalogPage">
+        <div class="catalog-head">
+          <button class="back-button" id="backButton" type="button">← Voltar aos setores</button>
+          <h2 class="catalog-title" id="catalogTitle"></h2>
+          <input class="search" id="searchInput" type="search" placeholder="Pesquisar por nome, código ou equipamento..." aria-label="Pesquisar peças">
+        </div>
+        <div class="catalog-actions">
+          <span id="resultCount"></span>
+          <button class="primary-button" id="addMaterialButton" type="button">＋ Adicionar peça</button>
+        </div>
+        <div class="item-list" id="itemList"></div>
+      </section>
+
+      <section class="form-panel" id="materialFormPanel">
+        <h2 class="form-title" id="formTitle">Adicionar peça</h2>
+        <form id="materialForm">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="materialName">Nome da peça *</label>
+              <input id="materialName" maxlength="90" required placeholder="Ex.: Rolamento do volante">
+            </div>
+            <div class="form-group">
+              <label for="materialCode">Código</label>
+              <input id="materialCode" maxlength="40" placeholder="Ex.: 40491149">
+            </div>
+            <div class="form-group">
+              <label for="materialSector">Setor *</label>
+              <input id="materialSector" maxlength="40" required placeholder="Ex.: Farpado">
+            </div>
+            <div class="form-group">
+              <label for="materialEquipment">Equipamento ou máquina</label>
+              <input id="materialEquipment" maxlength="80" placeholder="Ex.: Farpado">
+            </div>
+            <div class="form-group">
+              <label for="materialManufacturer">Fabricante ou modelo</label>
+              <input id="materialManufacturer" maxlength="80" placeholder="Ex.: NPM">
+            </div>
+            <div class="form-group">
+              <label for="materialPhotoUrl">Link da foto (opcional)</label>
+              <input id="materialPhotoUrl" type="url" placeholder="https://...">
+            </div>
+            <div class="form-group full">
+              <label for="materialNote">Observações</label>
+              <textarea id="materialNote" maxlength="240" placeholder="Medida, aplicação ou outra informação útil"></textarea>
+            </div>
+          </div>
+          <div class="form-footer">
+            <button class="secondary-button" id="cancelMaterial" type="button">Cancelar</button>
+            <button class="primary-button" id="saveMaterialButton" type="submit">Salvar peça</button>
+          </div>
+        </form>
+        <p class="message" id="formMessage" role="status"></p>
+      </section>
+
+      <p class="notice">Os dados são guardados no Supabase. O acesso ao catálogo exige login.</p>
+    </main>
   </main>
 
   <script>
-    let sectors = ["Farpado", "Trefila", "Galva", "Mecânica", "Elétrica", "Outros"];
+    const SUPABASE_URL = "https://gvapfqcvnhrbearfheeq.supabase.co";
+    const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_fJ36i6hMxg_NthkNFf3Tvw_6RZ_k9eF";
+    const OWNER_UID = "1e719569-14a3-43d5-8c4c-97d690946050";
+    const TABLE = "Materiais";
 
-    let materials = [
-      { name: "Bucha / casquilho do virabrequim — maior e menor", code: "40486828", sector: "Farpado", equipment: "Farpado", maker: "", note: "", photo: "" },
-      { name: "Bucha para eixo / pino do braço de suporte", code: "40486873", sector: "Farpado", equipment: "Farpado", maker: "", note: "", photo: "" },
-      { name: "Cubo do volante", code: "40919309", sector: "Farpado", equipment: "Farpado", maker: "", note: "", photo: "" },
-      { name: "Engrenagem maior do eixo secundário", code: "40908152", sector: "Farpado", equipment: "Farpado", maker: "", note: "", photo: "" },
-      { name: "Mola da catraca", code: "40486884", sector: "Farpado", equipment: "Farpado", maker: "", note: "", photo: "" },
-      { name: "Óleo Vacuoline 537 (NPM)", code: "40934390", sector: "Farpado", equipment: "Farpado", maker: "NPM", note: "", photo: "" },
-      { name: "Parafuso do eixo hexagonal", code: "40486723", sector: "Farpado", equipment: "Farpado", maker: "", note: "Anotação ao lado: “sup. 4 / inf.” — confirmar.", photo: "" },
-      { name: "Pino alimentador de farpa", code: "40934732", sector: "Farpado", equipment: "Farpado", maker: "", note: "", photo: "" },
-      { name: "Pino da catraca", code: "40908113", sector: "Farpado", equipment: "Farpado", maker: "", note: "", photo: "" },
-      { name: "Prisioneiro da navalha", code: "40491731", sector: "Farpado", equipment: "Farpado", maker: "", note: "", photo: "" },
-      { name: "Roda de nylon NPM", code: "40486704", sector: "Farpado", equipment: "Farpado", maker: "NPM", note: "", photo: "" },
-      { name: "Rolamento da catraca", code: "40491179", sector: "Farpado", equipment: "Farpado", maker: "", note: "Anotação adicional: N0214.", photo: "" },
-      { name: "Rolamento do braço da catraca", code: "40491170", sector: "Farpado", equipment: "Farpado", maker: "", note: "", photo: "" },
-      { name: "Rolamento do eixo hexagonal", code: "40491117", sector: "Farpado", equipment: "Farpado", maker: "", note: "Confira o último dígito do código na anotação.", photo: "" },
-      { name: "Rolamento do volante", code: "40491149", sector: "Farpado", equipment: "Farpado", maker: "", note: "", photo: "" },
-      { name: "Widia da alavanca", code: "40486727", sector: "Farpado", equipment: "Farpado", maker: "", note: "", photo: "" },
-      { name: "Widia guia do hexagonal", code: "40486849", sector: "Farpado", equipment: "Farpado", maker: "", note: "", photo: "" },
-      { name: "Disco da catraca — 1 aba", code: "40934452", sector: "Farpado", equipment: "Farpado", maker: "", note: "", photo: "" },
-      { name: "Disco da catraca — 2 abas", code: "40934453", sector: "Farpado", equipment: "Farpado", maker: "", note: "", photo: "" },
-      { name: "Alimentador de farpa — rolamentos", code: "", sector: "Farpado", equipment: "Farpado", maker: "", note: "A anotação indica rolamentos 6907 e 5907.", photo: "" }
-    ].map((item, index) => ({ ...item, id: `material-${index + 1}` }));
+    const DEFAULT_SECTORS = ["Farpado", "Trefila", "Galva", "Mecânica", "Elétrica", "Outros"];
 
+    let accessToken = "";
+    let currentUser = null;
+    let materials = [];
     let selectedSector = "";
     let editingId = null;
-    let selectedPhoto = "";
 
+    const loginPage = document.getElementById("loginPage");
+    const appPage = document.getElementById("appPage");
     const sectorsPage = document.getElementById("sectorsPage");
     const catalogPage = document.getElementById("catalogPage");
     const materialFormPanel = document.getElementById("materialFormPanel");
@@ -619,72 +430,141 @@
     const searchInput = document.getElementById("searchInput");
 
     function escapeHtml(value) {
-      return String(value).replace(/[&<>"']/g, character => ({
+      return String(value ?? "").replace(/[&<>"']/g, character => ({
         "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
       })[character]);
     }
 
+    function showMessage(element, text, success = false) {
+      element.textContent = text;
+      element.classList.toggle("success", success);
+      element.classList.add("show");
+    }
+
+    function clearMessage(element) {
+      element.textContent = "";
+      element.classList.remove("show", "success");
+    }
+
+    function authHeaders() {
+      return {
+        "apikey": SUPABASE_PUBLISHABLE_KEY,
+        "Authorization": `Bearer ${accessToken}`,
+        "Content-Type": "application/json"
+      };
+    }
+
+    async function supabaseRequest(path, options = {}) {
+      const response = await fetch(`${SUPABASE_URL}${path}`, {
+        ...options,
+        headers: { ...authHeaders(), ...(options.headers || {}) }
+      });
+
+      if (!response.ok) {
+        let details = "";
+        try {
+          const body = await response.json();
+          details = body.message || body.error_description || body.error || "";
+        } catch {}
+        throw new Error(details || `Falha na solicitação (${response.status}).`);
+      }
+
+      if (response.status === 204) return null;
+      return response.json();
+    }
+
+    async function signIn(email, password) {
+      const response = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
+        method: "POST",
+        headers: {
+          "apikey": SUPABASE_PUBLISHABLE_KEY,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ email, password })
+      });
+
+      const body = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error(body.msg || body.message || body.error_description || "E-mail ou senha inválidos.");
+      }
+      return body;
+    }
+
+    async function signOut() {
+      try {
+        await fetch(`${SUPABASE_URL}/auth/v1/logout`, {
+          method: "POST",
+          headers: {
+            "apikey": SUPABASE_PUBLISHABLE_KEY,
+            "Authorization": `Bearer ${accessToken}`
+          }
+        });
+      } catch {}
+      accessToken = "";
+      currentUser = null;
+      materials = [];
+      appPage.hidden = true;
+      document.getElementById("topActions").hidden = true;
+      loginPage.hidden = false;
+      document.getElementById("passwordInput").value = "";
+      clearMessage(document.getElementById("loginMessage"));
+    }
+
+    function showApp() {
+      loginPage.hidden = true;
+      appPage.hidden = false;
+      document.getElementById("topActions").hidden = false;
+      document.getElementById("signedInAs").textContent = currentUser?.email || "Conectado";
+    }
+
+    async function loadMaterials() {
+      itemList.innerHTML = '<div class="loading">Carregando peças…</div>';
+      const query = new URLSearchParams({
+        select: "id,name,code,sector,equipment,manufacturer,note,photo_url,created_at,owner_id",
+        owner_id: `eq.${OWNER_UID}`,
+        order: "name.asc"
+      });
+      materials = await supabaseRequest(`/rest/v1/${encodeURIComponent(TABLE)}?${query.toString()}`);
+      renderSectors();
+      if (selectedSector) renderMaterials();
+    }
+
+    function getSectors() {
+      const fromMaterials = materials.map(item => item.sector).filter(Boolean);
+      return [...new Set([...DEFAULT_SECTORS, ...fromMaterials])].sort((a, b) => a.localeCompare(b, "pt-BR"));
+    }
+
     function renderSectors() {
+      const sectors = getSectors();
       sectorGrid.innerHTML = sectors.map(sector => {
         const count = materials.filter(item => item.sector === sector).length;
         return `
-          <button class="sector-card" type="button" data-open-sector="${escapeHtml(sector)}">
-            <span class="sector-card-name">${escapeHtml(sector)}</span>
-            <span class="sector-card-count">${count} ${count === 1 ? "peça cadastrada" : "peças cadastradas"}</span>
+          <button class="sector-card" type="button" data-sector="${escapeHtml(sector)}">
+            <span class="sector-name">${escapeHtml(sector)}</span>
+            <span class="sector-count">${count} ${count === 1 ? "peça cadastrada" : "peças cadastradas"}</span>
           </button>`;
       }).join("");
 
-      sectorGrid.querySelectorAll("[data-open-sector]").forEach(button => {
-        button.addEventListener("click", () => openSector(button.dataset.openSector));
+      sectorGrid.querySelectorAll("[data-sector]").forEach(button => {
+        button.addEventListener("click", () => openSector(button.dataset.sector));
       });
-
-      renderManagedSectors();
-      renderSectorOptions();
-    }
-
-    function renderManagedSectors() {
-      const list = document.getElementById("managedSectors");
-      list.innerHTML = sectors.map(sector => `
-        <div class="managed-row">
-          <span class="managed-name">${escapeHtml(sector)}</span>
-          <span class="managed-actions">
-            <button type="button" data-rename-sector="${escapeHtml(sector)}">Renomear</button>
-            <button type="button" data-delete-sector="${escapeHtml(sector)}">Excluir</button>
-          </span>
-        </div>`).join("");
-
-      list.querySelectorAll("[data-rename-sector]").forEach(button => {
-        button.addEventListener("click", () => renameSector(button.dataset.renameSector));
-      });
-      list.querySelectorAll("[data-delete-sector]").forEach(button => {
-        button.addEventListener("click", () => deleteSector(button.dataset.deleteSector));
-      });
-    }
-
-    function renderSectorOptions() {
-      const select = document.getElementById("materialSector");
-      select.innerHTML = sectors.map(sector =>
-        `<option value="${escapeHtml(sector)}">${escapeHtml(sector)}</option>`
-      ).join("");
-      if (selectedSector && sectors.includes(selectedSector)) select.value = selectedSector;
     }
 
     function openSector(sector) {
       selectedSector = sector;
-      sectorsPage.style.display = "none";
+      sectorsPage.hidden = true;
       catalogPage.classList.add("open");
       document.getElementById("catalogTitle").textContent = sector;
-      document.getElementById("materialSector").value = sector;
       searchInput.value = "";
-      renderMaterials();
       materialFormPanel.classList.remove("open");
+      renderMaterials();
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
     function showSectors() {
       selectedSector = "";
       catalogPage.classList.remove("open");
-      sectorsPage.style.display = "block";
+      sectorsPage.hidden = false;
       materialFormPanel.classList.remove("open");
       searchInput.value = "";
       renderSectors();
@@ -695,7 +575,7 @@
       const query = searchInput.value.trim().toLocaleLowerCase("pt-BR");
       const filtered = materials
         .filter(item => item.sector === selectedSector)
-        .filter(item => `${item.name} ${item.code} ${item.equipment} ${item.maker} ${item.note}`
+        .filter(item => `${item.name} ${item.code} ${item.equipment || ""} ${item.manufacturer || ""} ${item.note || ""}`
           .toLocaleLowerCase("pt-BR").includes(query))
         .sort((a, b) => a.name.localeCompare(b.name, "pt-BR"));
 
@@ -703,96 +583,56 @@
         `${filtered.length} ${filtered.length === 1 ? "peça encontrada" : "peças encontradas"}`;
 
       if (!filtered.length) {
-        itemList.innerHTML = `<div class="empty">Nenhuma peça encontrada neste setor.<br>Você pode cadastrar uma nova peça.</div>`;
+        itemList.innerHTML = '<div class="empty">Nenhuma peça encontrada neste setor.<br>Use “Adicionar peça” para cadastrar uma.</div>';
         return;
       }
 
       itemList.innerHTML = filtered.map(item => `
         <article class="item-card">
-          <div class="item-photo">
-            ${item.photo
-              ? `<img src="${item.photo}" alt="Foto de ${escapeHtml(item.name)}">`
-              : "▧"}
-          </div>
           <div>
             <h3 class="item-name">${escapeHtml(item.name)}</h3>
             <p class="item-detail">${escapeHtml(item.sector)}${item.equipment ? ` · ${escapeHtml(item.equipment)}` : ""}</p>
-            ${item.maker ? `<p class="item-detail">Fabricante/modelo: ${escapeHtml(item.maker)}</p>` : ""}
+            ${item.manufacturer ? `<p class="item-detail">Fabricante/modelo: ${escapeHtml(item.manufacturer)}</p>` : ""}
             ${item.note ? `<p class="item-detail">${escapeHtml(item.note)}</p>` : ""}
+            ${item.photo_url ? `<p class="item-detail"><a href="${escapeHtml(item.photo_url)}" target="_blank" rel="noopener noreferrer">Abrir foto</a></p>` : ""}
             <span class="item-code">${item.code ? `Código: ${escapeHtml(item.code)}` : "Código não informado"}</span>
           </div>
           <div class="item-buttons">
-            <button type="button" data-edit-material="${escapeHtml(item.id)}">Editar</button>
-            <button class="delete" type="button" data-delete-material="${escapeHtml(item.id)}">Excluir</button>
+            <button type="button" data-edit="${escapeHtml(item.id)}">Editar</button>
+            <button class="delete" type="button" data-delete="${escapeHtml(item.id)}">Excluir</button>
           </div>
         </article>`).join("");
 
-      itemList.querySelectorAll("[data-edit-material]").forEach(button => {
-        button.addEventListener("click", () => editMaterial(button.dataset.editMaterial));
+      itemList.querySelectorAll("[data-edit]").forEach(button => {
+        button.addEventListener("click", () => editMaterial(button.dataset.edit));
       });
-      itemList.querySelectorAll("[data-delete-material]").forEach(button => {
-        button.addEventListener("click", () => deleteMaterial(button.dataset.deleteMaterial));
+      itemList.querySelectorAll("[data-delete]").forEach(button => {
+        button.addEventListener("click", () => deleteMaterial(button.dataset.delete));
       });
-    }
-
-    function renameSector(oldName) {
-      const answer = prompt(`Novo nome para o setor "${oldName}":`, oldName);
-      if (answer === null) return;
-      const newName = answer.trim();
-      if (!newName || newName === oldName) return;
-
-      if (sectors.some(sector => sector.toLocaleLowerCase("pt-BR") === newName.toLocaleLowerCase("pt-BR"))) {
-        alert("Já existe um setor com esse nome.");
-        return;
-      }
-
-      sectors = sectors.map(sector => sector === oldName ? newName : sector);
-      materials = materials.map(item => item.sector === oldName ? { ...item, sector: newName } : item);
-      if (selectedSector === oldName) selectedSector = newName;
-      renderSectors();
-      if (catalogPage.classList.contains("open")) {
-        document.getElementById("catalogTitle").textContent = selectedSector;
-        renderMaterials();
-      }
-    }
-
-    function deleteSector(name) {
-      const count = materials.filter(item => item.sector === name).length;
-      if (count > 0) {
-        alert(`Esse setor tem ${count} peça(s). Mova ou exclua as peças antes de excluir o setor.`);
-        return;
-      }
-      if (sectors.length <= 1) {
-        alert("É necessário manter pelo menos um setor.");
-        return;
-      }
-      if (!confirm(`Excluir o setor "${name}"?`)) return;
-      sectors = sectors.filter(sector => sector !== name);
-      renderSectors();
     }
 
     function resetMaterialForm() {
       document.getElementById("materialForm").reset();
       editingId = null;
-      selectedPhoto = "";
       document.getElementById("formTitle").textContent = "Adicionar peça";
+      document.getElementById("saveMaterialButton").textContent = "Salvar peça";
+      clearMessage(document.getElementById("formMessage"));
     }
 
     function openMaterialForm(item = null) {
       resetMaterialForm();
-      renderSectorOptions();
-
       if (item) {
         editingId = item.id;
         document.getElementById("formTitle").textContent = "Editar peça";
-        document.getElementById("materialName").value = item.name;
+        document.getElementById("saveMaterialButton").textContent = "Salvar alterações";
+        document.getElementById("materialName").value = item.name || "";
         document.getElementById("materialCode").value = item.code || "";
-        document.getElementById("materialSector").value = item.sector;
+        document.getElementById("materialSector").value = item.sector || selectedSector;
         document.getElementById("materialEquipment").value = item.equipment || "";
-        document.getElementById("materialMaker").value = item.maker || "";
+        document.getElementById("materialManufacturer").value = item.manufacturer || "";
+        document.getElementById("materialPhotoUrl").value = item.photo_url || "";
         document.getElementById("materialNote").value = item.note || "";
-        selectedPhoto = item.photo || "";
-      } else if (selectedSector) {
+      } else {
         document.getElementById("materialSector").value = selectedSector;
       }
 
@@ -802,93 +642,128 @@
     }
 
     function editMaterial(id) {
-      const item = materials.find(material => material.id === id);
+      const item = materials.find(material => String(material.id) === String(id));
       if (item) openMaterialForm(item);
     }
 
-    function deleteMaterial(id) {
-      const item = materials.find(material => material.id === id);
-      if (!item || !confirm(`Excluir "${item.name}"?`)) return;
-      materials = materials.filter(material => material.id !== id);
-      renderMaterials();
-      renderSectors();
+    async function deleteMaterial(id) {
+      const item = materials.find(material => String(material.id) === String(id));
+      if (!item || !confirm(`Excluir “${item.name}” do catálogo?`)) return;
+
+      try {
+        const query = new URLSearchParams({
+          id: `eq.${id}`,
+          owner_id: `eq.${OWNER_UID}`
+        });
+        await supabaseRequest(`/rest/v1/${encodeURIComponent(TABLE)}?${query.toString()}`, {
+          method: "DELETE"
+        });
+        await loadMaterials();
+      } catch (error) {
+        alert(`Não foi possível excluir a peça: ${error.message}`);
+      }
     }
 
-    document.getElementById("toggleSectorManager").addEventListener("click", event => {
-      const manager = document.getElementById("sectorManager");
-      const isOpen = manager.classList.toggle("open");
-      event.currentTarget.textContent = isOpen ? "−" : "+";
-      event.currentTarget.setAttribute("aria-expanded", String(isOpen));
-      event.currentTarget.setAttribute("aria-label", isOpen ? "Fechar gerenciamento de setores" : "Gerenciar setores");
-    });
-
-    document.getElementById("sectorForm").addEventListener("submit", event => {
+    document.getElementById("loginForm").addEventListener("submit", async event => {
       event.preventDefault();
-      const input = document.getElementById("newSectorName");
-      const name = input.value.trim();
-      if (!name) return;
+      const button = document.getElementById("loginButton");
+      const message = document.getElementById("loginMessage");
+      clearMessage(message);
+      button.disabled = true;
+      button.textContent = "Entrando…";
 
-      if (sectors.some(sector => sector.toLocaleLowerCase("pt-BR") === name.toLocaleLowerCase("pt-BR"))) {
-        alert("Esse setor já existe.");
-        return;
+      try {
+        const result = await signIn(
+          document.getElementById("emailInput").value.trim(),
+          document.getElementById("passwordInput").value
+        );
+        accessToken = result.access_token;
+        currentUser = result.user;
+
+        if (currentUser?.id !== OWNER_UID) {
+          await signOut();
+          throw new Error("Esta conta não é a autorizada para acessar este catálogo.");
+        }
+
+        showApp();
+        await loadMaterials();
+      } catch (error) {
+        showMessage(message, error.message || "Não foi possível entrar.");
+      } finally {
+        button.disabled = false;
+        button.textContent = "Entrar";
       }
-
-      sectors.push(name);
-      input.value = "";
-      renderSectors();
     });
+
+    document.getElementById("logoutButton").addEventListener("click", signOut);
 
     document.getElementById("backButton").addEventListener("click", showSectors);
+
     document.getElementById("addMaterialButton").addEventListener("click", () => openMaterialForm());
+
     document.getElementById("cancelMaterial").addEventListener("click", () => {
       materialFormPanel.classList.remove("open");
       resetMaterialForm();
     });
+
     searchInput.addEventListener("input", renderMaterials);
 
-    document.getElementById("materialPhoto").addEventListener("change", event => {
-      const file = event.target.files && event.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = () => { selectedPhoto = reader.result; };
-      reader.readAsDataURL(file);
-    });
-
-    document.getElementById("materialForm").addEventListener("submit", event => {
+    document.getElementById("materialForm").addEventListener("submit", async event => {
       event.preventDefault();
+      const message = document.getElementById("formMessage");
+      const saveButton = document.getElementById("saveMaterialButton");
+      clearMessage(message);
+      saveButton.disabled = true;
 
-      const name = document.getElementById("materialName").value.trim();
-      const code = document.getElementById("materialCode").value.trim();
-      const sector = document.getElementById("materialSector").value;
-      const equipment = document.getElementById("materialEquipment").value.trim();
-      const maker = document.getElementById("materialMaker").value.trim();
-      const note = document.getElementById("materialNote").value.trim();
+      const record = {
+        name: document.getElementById("materialName").value.trim(),
+        code: document.getElementById("materialCode").value.trim(),
+        sector: document.getElementById("materialSector").value.trim(),
+        equipment: document.getElementById("materialEquipment").value.trim() || null,
+        manufacturer: document.getElementById("materialManufacturer").value.trim() || null,
+        photo_url: document.getElementById("materialPhotoUrl").value.trim() || null,
+        note: document.getElementById("materialNote").value.trim() || null,
+        owner_id: OWNER_UID
+      };
 
-      if (!name || !sector) return;
-
-      if (editingId) {
-        const index = materials.findIndex(item => item.id === editingId);
-        if (index !== -1) {
-          materials[index] = {
-            ...materials[index], name, code, sector, equipment, maker, note,
-            photo: selectedPhoto || materials[index].photo
-          };
-        }
-      } else {
-        materials.push({
-          id: `material-${Date.now()}`, name, code, sector, equipment, maker, note, photo: selectedPhoto
-        });
+      if (!record.name || !record.sector) {
+        showMessage(message, "Preencha o nome da peça e o setor.");
+        saveButton.disabled = false;
+        return;
       }
 
-      selectedSector = sector;
-      document.getElementById("catalogTitle").textContent = sector;
-      materialFormPanel.classList.remove("open");
-      resetMaterialForm();
-      renderMaterials();
-      renderSectors();
-    });
+      try {
+        if (editingId) {
+          const query = new URLSearchParams({
+            id: `eq.${editingId}`,
+            owner_id: `eq.${OWNER_UID}`
+          });
+          await supabaseRequest(`/rest/v1/${encodeURIComponent(TABLE)}?${query.toString()}`, {
+            method: "PATCH",
+            headers: { "Prefer": "return=minimal" },
+            body: JSON.stringify(record)
+          });
+        } else {
+          await supabaseRequest(`/rest/v1/${encodeURIComponent(TABLE)}`, {
+            method: "POST",
+            headers: { "Prefer": "return=minimal" },
+            body: JSON.stringify(record)
+          });
+        }
 
-    renderSectors();
+        selectedSector = record.sector;
+        await loadMaterials();
+        document.getElementById("catalogTitle").textContent = selectedSector;
+        catalogPage.classList.add("open");
+        sectorsPage.hidden = true;
+        materialFormPanel.classList.remove("open");
+        resetMaterialForm();
+      } catch (error) {
+        showMessage(message, `Não foi possível salvar. ${error.message}`);
+      } finally {
+        saveButton.disabled = false;
+      }
+    });
   </script>
 </body>
 </html>
