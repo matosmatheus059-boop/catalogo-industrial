@@ -398,6 +398,12 @@
       .form-grid { grid-template-columns: 1fr; }
       .form-group.full { grid-column: auto; }
     }
+
+    .sector-manage { margin-top: 14px; padding: 16px; border-radius: 15px; background: var(--white); box-shadow: var(--shadow); }
+    .sector-form { display: flex; gap: 8px; margin-top: 10px; }
+    .sector-form input { flex: 1; min-width: 0; }
+    .sector-item { display: flex; flex-direction: column; }
+    .sector-remove { margin-top: 6px; border: 1px solid var(--line); border-radius: 7px; padding: 6px; background: var(--white); color: var(--red); font-size: 12px; font-weight: 700; }
   </style>
 </head>
 <body>
@@ -431,6 +437,14 @@
       <div class="intro">
         <h2>Setores</h2>
         <p>Escolha um setor para consultar e administrar as peças.</p>
+      </div>
+      <div class="sector-manage">
+        <h2>Gerenciar setores</h2>
+        <form id="addSectorForm" class="sector-form">
+          <input id="newSectorInput" maxlength="40" placeholder="Nome do novo setor, ex.: Usinagem" required>
+          <button class="primary-button" type="submit">＋ Adicionar setor</button>
+        </form>
+        <p class="message" id="sectorMessage" role="status"></p>
       </div>
       <div class="sector-panel">
         <h2>Seus setores</h2>
@@ -655,13 +669,27 @@
       );
 
       materials = Array.isArray(result) ? result : [];
+      await loadSectors();
       renderSectors();
       if (selectedSector) renderMaterials();
     }
 
+    let sectorRecords = [];
+
+    async function loadSectors() {
+      const query = new URLSearchParams({
+        select: "id,name",
+        owner_id: `eq.${OWNER_UID}`,
+        order: "name.asc"
+      });
+      const result = await supabaseRequest(`/rest/v1/Setores?${query.toString()}`);
+      sectorRecords = Array.isArray(result) ? result : [];
+    }
+
     function getSectors() {
+      const fromTable = sectorRecords.map(item => item.name);
       const fromMaterials = materials.map(item => item.sector).filter(Boolean);
-      return [...new Set([...DEFAULT_SECTORS, ...fromMaterials])]
+      return [...new Set([...fromTable, ...fromMaterials])]
         .sort((a, b) => a.localeCompare(b, "pt-BR"));
     }
 
@@ -669,16 +697,85 @@
       const sectors = getSectors();
       byId("sectorGrid").innerHTML = sectors.map(sector => {
         const count = materials.filter(item => item.sector === sector).length;
+        const removable = count === 0;
         return `
-          <button class="sector-card" type="button" data-sector="${escapeHtml(sector)}">
-            <span class="sector-name">${escapeHtml(sector)}</span>
-            <span class="sector-count">${count} ${count === 1 ? "peça cadastrada" : "peças cadastradas"}</span>
-          </button>`;
+          <div class="sector-item">
+            <button class="sector-card" type="button" data-sector="${escapeHtml(sector)}">
+              <span class="sector-name">${escapeHtml(sector)}</span>
+              <span class="sector-count">${count} ${count === 1 ? "peça cadastrada" : "peças cadastradas"}</span>
+            </button>
+            ${removable
+              ? `<button class="sector-remove" type="button" data-remove-sector="${escapeHtml(sector)}">Remover setor</button>`
+              : ""}
+          </div>`;
       }).join("");
 
       byId("sectorGrid").querySelectorAll("[data-sector]").forEach(button => {
         button.addEventListener("click", () => openSector(button.dataset.sector));
       });
+
+      byId("sectorGrid").querySelectorAll("[data-remove-sector]").forEach(button => {
+        button.addEventListener("click", () => removeSector(button.dataset.removeSector));
+      });
+    }
+
+    async function addSector(event) {
+      event.preventDefault();
+      const input = byId("newSectorInput");
+      const message = byId("sectorMessage");
+      const name = input.value.trim();
+      clearMessage(message);
+
+      if (!name) {
+        showMessage(message, "Digite o nome do setor.");
+        return;
+      }
+
+      const exists = getSectors().some(
+        sector => sector.toLocaleLowerCase("pt-BR") === name.toLocaleLowerCase("pt-BR")
+      );
+      if (exists) {
+        showMessage(message, "Esse setor já existe.");
+        return;
+      }
+
+      try {
+        await supabaseRequest("/rest/v1/Setores", {
+          method: "POST",
+          headers: { Prefer: "return=minimal" },
+          body: JSON.stringify({ name, owner_id: OWNER_UID })
+        });
+        input.value = "";
+        await loadSectors();
+        renderSectors();
+        showMessage(message, `Setor “${name}” criado.`, true);
+      } catch (error) {
+        showMessage(message, `Não foi possível criar o setor. ${error.message}`);
+      }
+    }
+
+    async function removeSector(name) {
+      const count = materials.filter(item => item.sector === name).length;
+      if (count > 0) {
+        alert(`O setor “${name}” ainda tem ${count} peça(s). Mova ou exclua essas peças antes de remover o setor.`);
+        return;
+      }
+      if (!confirm(`Remover o setor “${name}”?`)) return;
+
+      const record = sectorRecords.find(item => item.name === name);
+      if (!record) return;
+
+      try {
+        const query = new URLSearchParams({
+          id: `eq.${record.id}`,
+          owner_id: `eq.${OWNER_UID}`
+        });
+        await supabaseRequest(`/rest/v1/Setores?${query.toString()}`, { method: "DELETE" });
+        await loadSectors();
+        renderSectors();
+      } catch (error) {
+        alert(`Não foi possível remover o setor: ${error.message}`);
+      }
     }
 
     function openSector(sector) {
@@ -770,7 +867,6 @@
 
     function openMaterialForm(item = null) {
       resetMaterialForm();
-
       if (item) {
         editingId = item.id;
         byId("formTitle").textContent = "Editar peça";
@@ -913,6 +1009,8 @@
     });
 
     searchInput.addEventListener("input", renderMaterials);
+
+    byId("addSectorForm").addEventListener("submit", addSector);
 
     byId("materialForm").addEventListener("submit", async event => {
       event.preventDefault();
